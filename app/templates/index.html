@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="de">
+    <head>
+        <meta charset="UTF-8">
+        <title>GPIO Dashboard</title>
+    </head>
+    <body>
+        <p id="status">{{ state }}</p>
+    </body>
+    <script>
+        async function updateStatus() {
+            try {
+                const response = await fetch("/status");
+                const data = await response.json();
+                document.getElementById("status").innerText = data.state;
+            } catch (error) {
+                document.getElementById("status").innerText = "Fehler beim Laden";
+            }
+        }
+
+        // Sofort laden + alle 2 Sekunden aktualisieren
+        updateStatus();
+        setInterval(updateStatus, 1000);
+    </script>
+</html>
